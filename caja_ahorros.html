@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Páginas Bronceadas - Pieza Individual de Colección</title>
+    <title>Álbum Interactivo BonusCom</title>
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         body {
@@ -14,7 +14,7 @@
             padding: 20px;
         }
         .container {
-            max-width: 800px;
+            max-width: 850px;
             margin: 0 auto;
             background: #fdfbf7;
             border: 4px solid #5c3a21;
@@ -25,7 +25,7 @@
             gap: 30px;
         }
         .form-section {
-            flex: 1;
+            flex: 1.2;
         }
         .preview-section {
             flex: 1;
@@ -35,65 +35,63 @@
         }
         h2 {
             font-family: 'Special Elite', cursive;
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             text-transform: uppercase;
             border-bottom: 2px dashed #5c3a21;
             padding-bottom: 10px;
             color: #2c1810;
             margin-top: 0;
+            text-align: center;
         }
         label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: bold;
             display: block;
-            margin-top: 10px;
+            margin-top: 8px;
             color: #5c3a21;
         }
-        input[type="text"], input[type="file"] {
+        input[type="text"], input[type="file"], textarea {
             width: 100%;
-            padding: 8px;
-            font-size: 0.85rem;
+            padding: 7px;
+            font-size: 0.8rem;
             background: #f4ebd0;
             border: 1px solid #5c3a21;
-            margin-top: 5px;
+            margin-top: 3px;
             box-sizing: border-box;
             font-family: 'Courier Prime', monospace;
         }
+        textarea {
+            resize: vertical;
+            height: 60px;
+        }
         .card-preview {
             width: 320px;
-            height: 420px;
+            height: 440px;
             background: #f4ebd0;
             border: 3px solid #5c3a21;
-            padding: 15px;
+            padding: 12px;
             box-sizing: border-box;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
         }
-        .card-title {
-            font-family: 'Special Elite', cursive;
-            font-size: 0.9rem;
-            text-align: center;
-            border-bottom: 1px solid #5c3a21;
-            padding-bottom: 5px;
-        }
         .card-img-box {
             width: 100%;
-            height: 180px;
+            height: 170px;
             background: #e3d2b0;
             border: 1px dashed #5c3a21;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.7rem;
+            font-size: 0.65rem;
             overflow: hidden;
             background-size: cover;
             background-position: center;
         }
         .card-data {
-            font-size: 0.75rem;
-            line-height: 1.4;
+            font-size: 0.7rem;
+            line-height: 1.3;
         }
         .btn-accion {
             font-family: 'Special Elite', cursive;
@@ -104,7 +102,7 @@
             width: 100%;
             font-size: 1rem;
             cursor: pointer;
-            margin-top: 20px;
+            margin-top: 15px;
             border-radius: 4px;
         }
         .btn-accion:hover {
@@ -120,37 +118,37 @@
     <div class="container">
         <!-- Panel de Controles -->
         <div class="form-section">
-            <h2>Generador de Aviso Individual</h2>
+            <h2>Álbum Interactivo BonusCom</h2>
             
-            <label>Imagen del Comercio / Estampilla:</label>
+            <label>Imagen para Estampar:</label>
             <input type="file" accept="image/*" id="input-imagen" onchange="actualizarImagen(event)">
 
-            <label>Título del Coleccionable:</label>
-            <input type="text" id="input-titulo" value="Aviso Destacado - Comercio" oninput="actualizarTexto()">
+            <label>ID de Registro Robusto:</label>
+            <input type="text" id="input-id" value="REF-2026-BC-7842-X" oninput="actualizarTexto()">
 
             <label>Lugar de Referencia (GEO):</label>
             <input type="text" id="input-geo" value="MAR DEL PLATA" oninput="actualizarTexto()">
 
-            <label>Línea de Tiempo / Fecha:</label>
-            <input type="text" id="input-fecha" value="Adquisición BonusCom 2026" oninput="actualizarTexto()">
+            <label>Línea de Tiempo / Hitos Históricos:</label>
+            <textarea id="input-timeline" oninput="actualizarTexto()">2008: Adquisición inicial del terreno / 2026: Compilación y estampado en Álbum.</textarea>
 
-            <label>Mensaje Personal / Anotación:</label>
-            <input type="text" id="input-msg" value="Esencia capturada en el puerto" oninput="actualizarTexto()">
+            <label>Anotación / Comentario:</label>
+            <input type="text" id="input-msg" value="Esencia capturada en el puerto histórico." oninput="actualizarTexto()">
 
-            <button class="btn-accion" onclick="descargarPiezaHD()">💾 Descargar Pieza HD (.PNG)</button>
+            <button class="btn-accion" onclick="descargarPiezaHD()">💾 Estampar y Descargar Pieza HD (.PNG)</button>
         </div>
 
         <!-- Vista Previa en Vivo -->
         <div class="preview-section">
-            <div style="font-family: 'Special Elite'; font-size: 0.8rem; margin-bottom: 8px;">VISTA PREVIA EN VIVO</div>
+            <div style="font-family: 'Special Elite'; font-size: 0.75rem; margin-bottom: 6px;">VISTA PREVIA DE ESTAMPADO</div>
             <div class="card-preview" id="preview-box">
-                <div class="card-title" id="prev-titulo">Aviso Destacado - Comercio</div>
-                <div class="card-img-box" id="prev-img-box">[ Sin Imagen de Comercio ]</div>
+                <div style="font-family: 'Special Elite'; font-size: 0.75rem; text-align:center; border-bottom:1px solid #5c3a21; padding-bottom:3px;">ÁLBUM INTERACTIVO BONUSCOM</div>
+                <div class="card-img-box" id="prev-img-box">[ Sin Imagen ]</div>
                 <div class="card-data">
-                    <div><strong>ID:</strong> 2026-X01</div>
+                    <div id="prev-id"><strong>ID:</strong> REF-2026-BC-7842-X</div>
                     <div id="prev-geo"><strong>GEO:</strong> MAR DEL PLATA</div>
-                    <div id="prev-fecha"><strong>REF:</strong> Adquisición BonusCom 2026</div>
-                    <div id="prev-msg" style="margin-top:5px; font-style:italic;"><strong>MSG:</strong> Esencia capturada en el puerto</div>
+                    <div id="prev-timeline" style="margin-top:3px;"><strong>LÍNEA DE TIEMPO:</strong> 2008 / 2026</div>
+                    <div id="prev-msg" style="margin-top:3px; font-style:italic;"><strong>NOTA:</strong> Esencia capturada...</div>
                 </div>
             </div>
         </div>
@@ -179,17 +177,17 @@
         }
 
         function actualizarTexto() {
-            document.getElementById('prev-titulo').innerText = document.getElementById('input-titulo').value;
+            document.getElementById('prev-id').innerHTML = `<strong>ID:</strong> ${document.getElementById('input-id').value}`;
             document.getElementById('prev-geo').innerHTML = `<strong>GEO:</strong> ${document.getElementById('input-geo').value}`;
-            document.getElementById('prev-fecha').innerHTML = `<strong>REF:</strong> ${document.getElementById('input-fecha').value}`;
-            document.getElementById('prev-msg').innerHTML = `<strong>MSG:</strong> ${document.getElementById('input-msg').value}`;
+            document.getElementById('prev-timeline').innerHTML = `<strong>LÍNEA DE TIEMPO:</strong> ${document.getElementById('input-timeline').value.substring(0, 45)}...`;
+            document.getElementById('prev-msg').innerHTML = `<strong>NOTA:</strong> ${document.getElementById('input-msg').value}`;
         }
 
         function descargarPiezaHD() {
             const canvas = document.getElementById('canvas-output');
             const ctx = canvas.getContext('2d');
 
-            // Fondo de la tarjeta individual
+            // Fondo pergamino de la pieza
             ctx.fillStyle = '#f4ebd0';
             ctx.fillRect(0, 0, 800, 1050);
 
@@ -198,48 +196,57 @@
             ctx.lineWidth = 8;
             ctx.strokeRect(40, 40, 720, 970);
 
-            // Título principal de la pieza
+            // Encabezado del Álbum
             ctx.fillStyle = '#2c1810';
-            ctx.font = 'bold 32px "Special Elite", monospace';
+            ctx.font = 'bold 30px "Special Elite", monospace';
             ctx.textAlign = 'center';
-            ctx.fillText(document.getElementById('input-titulo').value, 400, 110);
+            ctx.fillText("ÁLBUM INTERACTIVO BONUSCOM", 400, 105);
 
-            // Recuadro de la imagen en alta definición
+            // Recuadro de la imagen estampada en HD
             ctx.fillStyle = '#e3d2b0';
-            ctx.fillRect(100, 150, 600, 450);
+            ctx.fillRect(100, 145, 600, 440);
             ctx.lineWidth = 4;
-            ctx.strokeRect(100, 150, 600, 450);
+            ctx.strokeRect(100, 145, 600, 440);
 
             if (imagenSeleccionada) {
-                ctx.drawImage(imagenSeleccionada, 100, 150, 600, 450);
+                ctx.drawImage(imagenSeleccionada, 100, 145, 600, 440);
             } else {
                 ctx.fillStyle = '#5c3a21';
                 ctx.font = '20px "Courier Prime", monospace';
-                ctx.fillText('[ Imagen de Comercio no cargada ]', 400, 385);
+                ctx.fillText('[ Imagen no cargada ]', 400, 375);
             }
 
-            // Datos de archivo y anotaciones en alta calidad
+            // Datos y Línea de Tiempo robusta
             ctx.textAlign = 'left';
-            ctx.font = 'bold 22px "Courier Prime", monospace';
-            let startY = 660;
+            ctx.font = 'bold 20px "Courier Prime", monospace';
+            let startY = 630;
 
-            ctx.fillText("ID DE REGISTRO: 2026-X01-BONUSCOM", 100, startY);
-            ctx.fillText("LUGAR DE REFERENCIA: " + document.getElementById('input-geo').value, 100, startY + 45);
-            ctx.fillText("FECHA / ADQUISICIÓN: " + document.getElementById('input-fecha').value, 100, startY + 90);
+            ctx.fillText("ID DE REGISTRO: " + document.getElementById('input-id').value, 100, startY);
+            ctx.fillText("LUGAR DE REFERENCIA: " + document.getElementById('input-geo').value, 100, startY + 40);
             
-            ctx.font = 'italic 24px "Courier Prime", monospace';
-            ctx.fillStyle = '#0f172a';
-            ctx.fillText("ANOTACIÓN: " + document.getElementById('input-msg').value, 100, startY + 150);
+            ctx.font = '18px "Courier Prime", monospace';
+            ctx.fillText("LÍNEA DE TIEMPO / HITOS:", 100, startY + 90);
+            ctx.font = 'italic 16px "Courier Prime", monospace';
+            
+            // Ajuste de texto multilínea para la línea de tiempo
+            const timelineText = document.getElementById('input-timeline').value;
+            ctx.fillText(timelineText, 100, startY + 120, 600);
 
-            // Sello de pie de página institucional
+            ctx.font = 'bold 18px "Courier Prime", monospace';
+            ctx.fillText("ANOTACIÓN:", 100, startY + 180);
+            ctx.font = 'italic 18px "Courier Prime", monospace';
+            ctx.fillStyle = '#0f172a';
+            ctx.fillText(document.getElementById('input-msg').value, 100, startY + 210, 600);
+
+            // Pie de página institucional
             ctx.fillStyle = '#5c3a21';
-            ctx.font = '18px "Special Elite", monospace';
+            ctx.font = '16px "Special Elite", monospace';
             ctx.textAlign = 'center';
-            ctx.fillText("© 2026 VentaniYA! Cinemascopado — Hoja de Estampado Histórico", 400, 960);
+            ctx.fillText("© 2026 VentaniYA! Cinemascopado — Pieza de Colección Oficial", 400, 965);
 
             // Disparar descarga en HD
             const enlace = document.createElement('a');
-            enlace.download = 'pieza_coleccion_hd.png';
+            enlace.download = 'pieza_album_bonuscom.png';
             enlace.href = canvas.toDataURL('image/png');
             enlace.click();
         }
