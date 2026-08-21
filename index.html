@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VentaniYA! Cinemascopado - 2026</title>
+    <style>
+        :root {
+            --bg-dark: #050508;
+            --panel-bg: #0f0f14;
+            --neon-red: #ff2a2a;
+            --neon-amber: #ffb703;
+            --neon-cyan: #38bdf8;
+            --text-main: #f1f5f9;
+        }
+        body {
+            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .marquesina-container {
+            max-width: 750px;
+            margin: 0 auto;
+            background-color: var(--panel-bg);
+            border: 3px solid var(--neon-amber);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 0 25px rgba(255, 183, 3, 0.3);
+        }
+        header {
+            text-align: center;
+            border-bottom: 2px dashed var(--neon-red);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+        .cine-title {
+            color: var(--neon-amber);
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(255, 183, 3, 0.5);
+        }
+        .cine-subtitle {
+            color: var(--neon-red);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+        .sala-card {
+            background: #181822;
+            border: 1px solid #334155;
+            border-left: 4px solid var(--neon-cyan);
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+        }
+        .sala-card.red { border-left-color: var(--neon-red); }
+        .sala-card.amber { border-left-color: var(--neon-amber); }
+        .sala-card.green { border-left-color: #22c55e; }
+        
+        .sala-title {
+            font-size: 0.9rem;
+            color: var(--neon-cyan);
+            font-weight: bold;
+            margin: 0 0 5px 0;
+            text-transform: uppercase;
+        }
+        .sala-card.red .sala-title { color: var(--neon-red); }
+        .sala-card.amber .sala-title { color: var(--neon-amber); }
+        .sala-card.green .sala-title { color: #22c55e; }
+
+        .sala-desc {
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            line-height: 1.4;
+            margin: 0;
+        }
+        .audio-tag {
+            font-size: 0.7rem;
+            color: #94a3b8;
+            margin-top: 6px;
+            font-style: italic;
+        }
+        .cta-section {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 2px dashed var(--neon-amber);
+        }
+        .btn-entrar {
+            background: linear-gradient(135deg, #b91c1c, #450a0a);
+            color: #fef08a;
+            border: 2px solid var(--neon-amber);
+            padding: 12px 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            font-family: 'Courier New', Courier, monospace;
+            text-transform: uppercase;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(255, 183, 3, 0.4);
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-entrar:hover {
+            background: linear-gradient(135deg, #dc2626, #7f1d1d);
+            transform: scale(1.03);
+            box-shadow: 0 0 25px rgba(255, 183, 3, 0.8);
+        }
+        .timer-bar {
+            font-size: 0.75rem;
+            color: #f97316;
+            margin-bottom: 12px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* ESTILOS DE LA CINTA DE TELETIPO (TICKER TAPE) */
+        .ticker-wrap {
+            margin-top: 15px;
+            background-color: #030712;
+            border-top: 1px dashed var(--neon-cyan);
+            border-bottom: 1px dashed var(--neon-cyan);
+            color: var(--neon-cyan);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.75rem;
+            font-weight: bold;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+            padding: 6px 0;
+            width: 100%;
+            border-radius: 4px;
+        }
+        .ticker {
+            display: inline-block;
+            animation: ticker 35s linear infinite;
+        }
+        .ticker-item {
+            display: inline-block;
+            padding: 0 20px;
+        }
+        .ticker-item span {
+            color: #f97316;
+        }
+        @keyframes ticker {
+            0% { transform: translate3d(100%, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="marquesina-container">
+        <header>
+            <div class="cine-title">VentaniYA! Cinemascopado</div>
+            <div class="cine-subtitle">🐱 Presenta: Cine de Superimaginación - 2026 🐱</div>
+        </header>
+
+        <div class="timer-bar">
+            ⏱️ Tiempo de indecisión: <span id="milisegundos">0000</span> ms [Tic-Tac]
+        </div>
+
+        <!-- SALA 1: AUTOCINE FRENTE AL MAR -->
+        <div class="sala-card red">
+            <div class="sala-title">🌊 Autocine Frente al Mar: Tiburón I (La Leyenda del Puerto)</div>
+            <p class="sala-desc">
+                El tano de Miami con el tiburón de juguete por la cabeza y su apoteósica procesión dominical en la tarima de Aldosivi. ¡Sentí el salitre y los bombos en la escollera!
+            </p>
+            <div class="audio-tag">🔊 Proyección Mental Activa: "¡Acá vas a hacer guita con eso, pibe!"</div>
+        </div>
+
+        <!-- SALA 2: LAS SIERRAS -->
+        <div class="sala-card amber">
+            <div class="sala-title">🌲 Sala de las Sierras: E.T. Miel y Sierras (Parte I)</div>
+            <p class="sala-desc">
+                Platos voladores sobrevolando los peñascos, serranos con gomera y un extraterrestre tomando fernet con miel serrana en el rancho. 
+            </p>
+            <div class="audio-tag">🔊 Estética: Pinar, silencio serrano y contacto intergaláctico criollo.</div>
+        </div>
+
+        <!-- SALA 3: LA PEATONAL (PRIMICIA ABSOLUTA) -->
+        <div class="sala-card green">
+            <div class="sala-title">🏙️ Sala de la Peatonal: King Kong - El Resurgir del Desarmadero</div>
+            <p class="sala-desc">
+                La primicia que sacude la taquilla: tras el intento de desguace público en pleno centro de Mar del Plata, los restos del coloso fueron arrojados a un viejo desarmadero local. Pero el motor de King aún late entre los fierros oxidados. ¡El simio se levanta para reclamar la ciudad!
+            </p>
+            <div class="audio-tag">🔊 Escena clave: El estruendo de los chasis viejos moviéndose cuando King se levanta a medianoche.</div>
+        </div>
+
+        <div class="cta-section">
+            <a href="https://sites.google.com/view/ventaniyapagosyacceso?usp=sharing" target="_blank" class="btn-entrar">
+                ⚡ ¡Entrá al universo por la VentaniYA! ⚡
+            </a>
+        </div>
+
+        <!-- TIRA DE TELETIPO (ESTADÍSTICAS EN VIVO) -->
+        <div class="ticker-wrap">
+            <div class="ticker">
+                <div class="ticker-item">🎟️ ESTAMPIYA!: <span>636 usuarios</span> | Descargas: <span>151</span></div>
+                <div class="ticker-item">🖼️ POSTALES: <span>231 usuarios</span> | Descargas: <span>63</span></div>
+                <div class="ticker-item">⚙️ FECHADORES HUB: <span>315 usuarios</span> | Descargas: <span>100</span></div>
+                <div class="ticker-item">🎁 BONUSYA!: <span>732 usuarios</span> | Bonuscom: <span>500</span></div>
+                <div class="ticker-item">🎬 CINES MULTIVERSAL: <span>92 usuarios</span></div>
+                <div class="ticker-item">🌐 TOTAL USUARIOS: <span>1393</span></div>
+                <div class="ticker-item">🚀 EN PASARELAS: <span>36</span></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Reloj de milisegundos dinámico
+        let startTime = Date.now();
+        setInterval(() => {
+            let elapsed = Date.now() - startTime;
+            document.getElementById('milisegundos').innerText = String(elapsed).padStart(6, '0');
+        }, 50);
+    </script>
+</body>
+</html>
