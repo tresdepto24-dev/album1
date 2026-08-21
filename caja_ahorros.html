@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Páginas Bronceadas - Directorio Interactivo</title>
-    <!-- Fuentes tipográficas vintage de Google Fonts -->
+    <title>Páginas Bronceadas - Pieza Individual de Colección</title>
     <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
         body {
@@ -15,104 +14,102 @@
             padding: 20px;
         }
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
             background: #fdfbf7;
             border: 4px solid #5c3a21;
             padding: 30px;
             border-radius: 6px;
             box-shadow: 0 0 25px rgba(92, 58, 33, 0.3);
+            display: flex;
+            gap: 30px;
+        }
+        .form-section {
+            flex: 1;
+        }
+        .preview-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         h2 {
             font-family: 'Special Elite', cursive;
-            text-align: center;
+            font-size: 1.4rem;
             text-transform: uppercase;
             border-bottom: 2px dashed #5c3a21;
-            padding-bottom: 15px;
+            padding-bottom: 10px;
             color: #2c1810;
-            font-size: 1.8rem;
-            letter-spacing: 1px;
-            margin-bottom: 5px;
+            margin-top: 0;
         }
-        .subtitle {
-            text-align: center;
-            font-size: 0.95rem;
-            margin-bottom: 25px;
-            color: #5c3a21;
-            font-style: italic;
-        }
-        .grid-10 {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-        .slot {
-            border: 2px solid #5c3a21;
-            background: #f4ebd0;
-            padding: 8px;
-            border-radius: 4px;
-            text-align: center;
-        }
-        .slot-title {
-            font-family: 'Special Elite', cursive;
+        label {
             font-size: 0.8rem;
-            margin-bottom: 6px;
-            text-transform: uppercase;
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
             color: #5c3a21;
         }
-        .upload-box {
+        input[type="text"], input[type="file"] {
             width: 100%;
-            height: 85px;
+            padding: 8px;
+            font-size: 0.85rem;
+            background: #f4ebd0;
+            border: 1px solid #5c3a21;
+            margin-top: 5px;
+            box-sizing: border-box;
+            font-family: 'Courier Prime', monospace;
+        }
+        .card-preview {
+            width: 320px;
+            height: 420px;
+            background: #f4ebd0;
+            border: 3px solid #5c3a21;
+            padding: 15px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+        }
+        .card-title {
+            font-family: 'Special Elite', cursive;
+            font-size: 0.9rem;
+            text-align: center;
+            border-bottom: 1px solid #5c3a21;
+            padding-bottom: 5px;
+        }
+        .card-img-box {
+            width: 100%;
+            height: 180px;
             background: #e3d2b0;
             border: 1px dashed #5c3a21;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.65rem;
-            cursor: pointer;
-            margin-bottom: 6px;
-            overflow: hidden;
-            position: relative;
-        }
-        .upload-box input {
-            position: absolute;
-            opacity: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-        .slot input[type="text"] {
-            width: 100%;
-            padding: 4px;
             font-size: 0.7rem;
-            background: #fdfbf7;
-            border: 1px solid #5c3a21;
-            margin-bottom: 4px;
-            box-sizing: border-box;
-            font-family: 'Courier Prime', monospace;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
         }
-        .global-controls {
-            border-top: 2px dashed #5c3a21;
-            padding-top: 20px;
-            text-align: center;
+        .card-data {
+            font-size: 0.75rem;
+            line-height: 1.4;
         }
         .btn-accion {
             font-family: 'Special Elite', cursive;
             background: #5c3a21;
             color: #f4ebd0;
             border: 2px solid #2c1810;
-            padding: 15px 35px;
-            font-size: 1.1rem;
+            padding: 12px;
+            width: 100%;
+            font-size: 1rem;
             cursor: pointer;
+            margin-top: 20px;
             border-radius: 4px;
-            letter-spacing: 1px;
-            transition: background 0.2s;
         }
         .btn-accion:hover {
             background: #7c4e31;
         }
-        /* Lienzo oculto para generar la imagen final */
         #canvas-output {
             display: none;
         }
@@ -121,52 +118,59 @@
 <body>
 
     <div class="container">
-        <h2>Páginas Bronceadas — Directorio de Colección 2026</h2>
-        <div class="subtitle">Cargue sus 10 piezas, asigne sus títulos, geolocalización y mensajes para estampar la lámina de época.</div>
-        
-        <div class="grid-10" id="grilla-piezas"></div>
+        <!-- Panel de Controles -->
+        <div class="form-section">
+            <h2>Generador de Aviso Individual</h2>
+            
+            <label>Imagen del Comercio / Estampilla:</label>
+            <input type="file" accept="image/*" id="input-imagen" onchange="actualizarImagen(event)">
 
-        <div class="global-controls">
-            <button class="btn-accion" onclick="generarLaminaFinal()">💾 Compilar y Descargar Lámina (.PNG) 💾</button>
+            <label>Título del Coleccionable:</label>
+            <input type="text" id="input-titulo" value="Aviso Destacado - Comercio" oninput="actualizarTexto()">
+
+            <label>Lugar de Referencia (GEO):</label>
+            <input type="text" id="input-geo" value="MAR DEL PLATA" oninput="actualizarTexto()">
+
+            <label>Línea de Tiempo / Fecha:</label>
+            <input type="text" id="input-fecha" value="Adquisición BonusCom 2026" oninput="actualizarTexto()">
+
+            <label>Mensaje Personal / Anotación:</label>
+            <input type="text" id="input-msg" value="Esencia capturada en el puerto" oninput="actualizarTexto()">
+
+            <button class="btn-accion" onclick="descargarPiezaHD()">💾 Descargar Pieza HD (.PNG)</button>
+        </div>
+
+        <!-- Vista Previa en Vivo -->
+        <div class="preview-section">
+            <div style="font-family: 'Special Elite'; font-size: 0.8rem; margin-bottom: 8px;">VISTA PREVIA EN VIVO</div>
+            <div class="card-preview" id="preview-box">
+                <div class="card-title" id="prev-titulo">Aviso Destacado - Comercio</div>
+                <div class="card-img-box" id="prev-img-box">[ Sin Imagen de Comercio ]</div>
+                <div class="card-data">
+                    <div><strong>ID:</strong> 2026-X01</div>
+                    <div id="prev-geo"><strong>GEO:</strong> MAR DEL PLATA</div>
+                    <div id="prev-fecha"><strong>REF:</strong> Adquisición BonusCom 2026</div>
+                    <div id="prev-msg" style="margin-top:5px; font-style:italic;"><strong>MSG:</strong> Esencia capturada en el puerto</div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Canvas oculto para procesar la imagen con las fuentes y marcas -->
-    <canvas id="canvas-output" width="1200" height="1600"></canvas>
+    <canvas id="canvas-output" width="800" height="1050"></canvas>
 
     <script>
-        const imagenesCargadas = {};
+        let imagenSeleccionada = null;
 
-        // Generar los 10 casilleros interactivos
-        const grilla = document.getElementById('grilla-piezas');
-        for (let i = 1; i <= 10; i++) {
-            grilla.innerHTML += `
-                <div class="slot">
-                    <div class="slot-title">Pieza 0${i}</div>
-                    <div class="upload-box" id="box-${i}">
-                        <span>+ Foto ${i}</span>
-                        <input type="file" accept="image/*" onchange="cargarImagen(event, ${i})">
-                    </div>
-                    <input type="text" placeholder="Título / Ref" id="titulo-${i}" value="Aviso Destacado">
-                    <input type="text" placeholder="Geo" id="geo-${i}" value="MAR DEL PLATA">
-                    <input type="text" placeholder="Mensaje..." id="msg-${i}">
-                </div>
-            `;
-        }
-
-        function cargarImagen(event, id) {
+        function actualizarImagen(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     const img = new Image();
                     img.onload = function() {
-                        imagenesCargadas[id] = img;
-                        const box = document.getElementById(`box-${id}`);
-                        box.style.backgroundImage = `url(${e.target.result})`;
-                        box.style.backgroundSize = 'cover';
-                        box.style.backgroundPosition = 'center';
-                        box.querySelector('span').style.display = 'none';
+                        imagenSeleccionada = img;
+                        document.getElementById('prev-img-box').style.backgroundImage = `url(${e.target.result})`;
+                        document.getElementById('prev-img-box').innerText = '';
                     };
                     img.src = e.target.result;
                 }
@@ -174,85 +178,68 @@
             }
         }
 
-        function generarLaminaFinal() {
+        function actualizarTexto() {
+            document.getElementById('prev-titulo').innerText = document.getElementById('input-titulo').value;
+            document.getElementById('prev-geo').innerHTML = `<strong>GEO:</strong> ${document.getElementById('input-geo').value}`;
+            document.getElementById('prev-fecha').innerHTML = `<strong>REF:</strong> ${document.getElementById('input-fecha').value}`;
+            document.getElementById('prev-msg').innerHTML = `<strong>MSG:</strong> ${document.getElementById('input-msg').value}`;
+        }
+
+        function descargarPiezaHD() {
             const canvas = document.getElementById('canvas-output');
             const ctx = canvas.getContext('2d');
 
-            // 1. Fondo pergamino
+            // Fondo de la tarjeta individual
             ctx.fillStyle = '#f4ebd0';
-            ctx.fillRect(0, 0, 1200, 1600);
+            ctx.fillRect(0, 0, 800, 1050);
 
-            // 2. Encabezado de época
+            // Marco exterior elegante
+            ctx.strokeStyle = '#5c3a21';
+            ctx.lineWidth = 8;
+            ctx.strokeRect(40, 40, 720, 970);
+
+            // Título principal de la pieza
             ctx.fillStyle = '#2c1810';
-            ctx.font = 'bold 36px "Special Elite", monospace';
+            ctx.font = 'bold 32px "Special Elite", monospace';
             ctx.textAlign = 'center';
-            ctx.fillText("PÁGINAS BRONCEADAS — DIRECTORIO DE COLECCIÓN", 600, 70);
+            ctx.fillText(document.getElementById('input-titulo').value, 400, 110);
 
-            ctx.fillStyle = '#5c3a21';
-            ctx.font = '20px "Courier Prime", monospace';
-            ctx.fillText("Su Registro Histórico y Caja de Ahorros BonusCom", 600, 110);
+            // Recuadro de la imagen en alta definición
+            ctx.fillStyle = '#e3d2b0';
+            ctx.fillRect(100, 150, 600, 450);
+            ctx.lineWidth = 4;
+            ctx.strokeRect(100, 150, 600, 450);
 
-            // 3. Grilla de tarjetas (2 columnas x 5 filas)
-            const startX = 100, startY = 160;
-            const ancho = 190, alto = 240;
-            const gapX = 50, gapY = 35;
-
-            for (let i = 1; i <= 10; i++) {
-                const col = (i - 1) % 5;
-                const row = Math.floor((i - 1) / 5);
-                const x = startX + col * (ancho + gapX);
-                const y = startY + row * (alto + gapY);
-
-                // Marco de la tarjeta
-                ctx.strokeStyle = '#5c3a21';
-                ctx.lineWidth = 3;
-                ctx.strokeRect(x, y, ancho, alto);
-
-                // Cuadro interno de la imagen
-                ctx.fillStyle = '#e3d2b0';
-                ctx.fillRect(x + 15, y + 15, 160, 100);
-                ctx.strokeRect(x + 15, y + 15, 160, 100);
-
-                // Si el usuario cargó imagen para este slot, la dibujamos
-                if (imagenesCargadas[i]) {
-                    ctx.drawImage(imagenesCargadas[i], x + 15, y + 15, 160, 100);
-                } else {
-                    ctx.fillStyle = '#5c3a21';
-                    ctx.font = '12px "Courier Prime", monospace';
-                    ctx.textAlign = 'center';
-                    ctx.fillText(`[ Sin Imagen ]`, x + 95, y + 70);
-                    ctx.textAlign = 'left';
-                }
-
-                // Textos y metadatos debajo de la imagen
-                const titulo = document.getElementById(`titulo-${i}`).value || "Aviso Destacado";
-                const geo = document.getElementById(`geo-${i}`).value || "MAR DEL PLATA";
-                const msg = document.getElementById(`msg-${i}`).value || "";
-
-                ctx.fillStyle = '#2c1810';
-                ctx.font = 'bold 12px "Special Elite", monospace';
-                ctx.fillText(titulo, x + 15, y + 133);
-
-                ctx.fillStyle = '#475569';
-                ctx.font = '11px "Courier Prime", monospace';
-                ctx.fillText(`ID: 2026-X0${i}`, x + 15, y + 152);
-                ctx.fillText(`GEO: ${geo}`, x + 15, y + 170);
-                ctx.fillText(`PESO: 15MB`, x + 15, y + 188);
-
-                ctx.fillStyle = '#0f172a';
-                ctx.font = 'italic 11px "Courier Prime", monospace';
-                ctx.fillText(`MSG: ${msg.substring(0, 18)}`, x + 15, y + 215);
+            if (imagenSeleccionada) {
+                ctx.drawImage(imagenSeleccionada, 100, 150, 600, 450);
+            } else {
+                ctx.fillStyle = '#5c3a21';
+                ctx.font = '20px "Courier Prime", monospace';
+                ctx.fillText('[ Imagen de Comercio no cargada ]', 400, 385);
             }
 
-            // Pie de página oficial
-            ctx.fillStyle = '#5c3a21';
-            ctx.font = '16px "Special Elite", monospace';
-            ctx.textAlign = 'center';
-            ctx.fillText("© 2026 VentaniYA! Cinemascopado — Guía Interactiva", 600, 1550);
+            // Datos de archivo y anotaciones en alta calidad
+            ctx.textAlign = 'left';
+            ctx.font = 'bold 22px "Courier Prime", monospace';
+            let startY = 660;
 
-            // 4. Descargar automáticamente el archivo PNG generado
+            ctx.fillText("ID DE REGISTRO: 2026-X01-BONUSCOM", 100, startY);
+            ctx.fillText("LUGAR DE REFERENCIA: " + document.getElementById('input-geo').value, 100, startY + 45);
+            ctx.fillText("FECHA / ADQUISICIÓN: " + document.getElementById('input-fecha').value, 100, startY + 90);
+            
+            ctx.font = 'italic 24px "Courier Prime", monospace';
+            ctx.fillStyle = '#0f172a';
+            ctx.fillText("ANOTACIÓN: " + document.getElementById('input-msg').value, 100, startY + 150);
+
+            // Sello de pie de página institucional
+            ctx.fillStyle = '#5c3a21';
+            ctx.font = '18px "Special Elite", monospace';
+            ctx.textAlign = 'center';
+            ctx.fillText("© 2026 VentaniYA! Cinemascopado — Hoja de Estampado Histórico", 400, 960);
+
+            // Disparar descarga en HD
             const enlace = document.createElement('a');
-            enlace.download = 'hoja_bronceada_final.png';
+            enlace.download = 'pieza_coleccion_hd.png';
             enlace.href = canvas.toDataURL('image/png');
             enlace.click();
         }
