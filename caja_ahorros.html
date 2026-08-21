@@ -2,253 +2,77 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Álbum Interactivo BonusCom</title>
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <title>Álbum Interactivo BonusCom - Vía del Milisegundo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Courier Prime', monospace;
-            background-color: #f4ebd0;
-            color: #2c1810;
-            margin: 0;
-            padding: 20px;
-        }
-        .container {
-            max-width: 850px;
-            margin: 0 auto;
-            background: #fdfbf7;
-            border: 4px solid #5c3a21;
-            padding: 30px;
-            border-radius: 6px;
-            box-shadow: 0 0 25px rgba(92, 58, 33, 0.3);
-            display: flex;
-            gap: 30px;
-        }
-        .form-section {
-            flex: 1.2;
-        }
-        .preview-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        h2 {
-            font-family: 'Special Elite', cursive;
-            font-size: 1.3rem;
-            text-transform: uppercase;
-            border-bottom: 2px dashed #5c3a21;
-            padding-bottom: 10px;
-            color: #2c1810;
-            margin-top: 0;
-            text-align: center;
-        }
-        label {
-            font-size: 0.75rem;
-            font-weight: bold;
-            display: block;
-            margin-top: 8px;
-            color: #5c3a21;
-        }
-        input[type="text"], input[type="file"], textarea {
-            width: 100%;
-            padding: 7px;
-            font-size: 0.8rem;
-            background: #f4ebd0;
-            border: 1px solid #5c3a21;
-            margin-top: 3px;
-            box-sizing: border-box;
-            font-family: 'Courier Prime', monospace;
-        }
-        textarea {
-            resize: vertical;
-            height: 60px;
-        }
-        .card-preview {
-            width: 320px;
-            height: 440px;
-            background: #f4ebd0;
-            border: 3px solid #5c3a21;
-            padding: 12px;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-        }
-        .card-img-box {
-            width: 100%;
-            height: 170px;
-            background: #e3d2b0;
-            border: 1px dashed #5c3a21;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.65rem;
-            overflow: hidden;
-            background-size: cover;
-            background-position: center;
-        }
-        .card-data {
-            font-size: 0.7rem;
-            line-height: 1.3;
-        }
-        .btn-accion {
-            font-family: 'Special Elite', cursive;
-            background: #5c3a21;
-            color: #f4ebd0;
-            border: 2px solid #2c1810;
-            padding: 12px;
-            width: 100%;
-            font-size: 1rem;
-            cursor: pointer;
-            margin-top: 15px;
-            border-radius: 4px;
-        }
-        .btn-accion:hover {
-            background: #7c4e31;
-        }
-        #canvas-output {
-            display: none;
-        }
+        body { background-color: #1a1a1a; color: #fff; font-family: 'Share Tech Mono', monospace; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: #222; padding: 30px; border: 2px solid #00f2ff; border-radius: 10px; }
+        .btn-accion { background: #00f2ff; color: #000; font-family: 'Orbitron', sans-serif; font-weight: bold; border: none; padding: 15px; width: 100%; cursor: pointer; font-size: 1.2rem; }
+        #canvas-output { display: none; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Panel de Controles -->
-        <div class="form-section">
-            <h2>Álbum Interactivo BonusCom</h2>
-            
-            <label>Imagen para Estampar:</label>
-            <input type="file" accept="image/*" id="input-imagen" onchange="actualizarImagen(event)">
-
-            <label>ID de Registro Robusto:</label>
-            <input type="text" id="input-id" value="REF-2026-BC-7842-X" oninput="actualizarTexto()">
-
-            <label>Lugar de Referencia (GEO):</label>
-            <input type="text" id="input-geo" value="MAR DEL PLATA" oninput="actualizarTexto()">
-
-            <label>Línea de Tiempo / Hitos Históricos:</label>
-            <textarea id="input-timeline" oninput="actualizarTexto()">2008: Adquisición inicial del terreno / 2026: Compilación y estampado en Álbum.</textarea>
-
-            <label>Anotación / Comentario:</label>
-            <input type="text" id="input-msg" value="Esencia capturada en el puerto histórico." oninput="actualizarTexto()">
-
-            <button class="btn-accion" onclick="descargarPiezaHD()">💾 Estampar y Descargar Pieza HD (.PNG)</button>
-        </div>
-
-        <!-- Vista Previa en Vivo -->
-        <div class="preview-section">
-            <div style="font-family: 'Special Elite'; font-size: 0.75rem; margin-bottom: 6px;">VISTA PREVIA DE ESTAMPADO</div>
-            <div class="card-preview" id="preview-box">
-                <div style="font-family: 'Special Elite'; font-size: 0.75rem; text-align:center; border-bottom:1px solid #5c3a21; padding-bottom:3px;">ÁLBUM INTERACTIVO BONUSCOM</div>
-                <div class="card-img-box" id="prev-img-box">[ Sin Imagen ]</div>
-                <div class="card-data">
-                    <div id="prev-id"><strong>ID:</strong> REF-2026-BC-7842-X</div>
-                    <div id="prev-geo"><strong>GEO:</strong> MAR DEL PLATA</div>
-                    <div id="prev-timeline" style="margin-top:3px;"><strong>LÍNEA DE TIEMPO:</strong> 2008 / 2026</div>
-                    <div id="prev-msg" style="margin-top:3px; font-style:italic;"><strong>NOTA:</strong> Esencia capturada...</div>
-                </div>
-            </div>
-        </div>
+        <h2>Álbum Interactivo BonusCom</h2>
+        <input type="file" id="input-imagen" accept="image/*" onchange="cargarImagen(event)">
+        <p>El ID Robusto se generará automáticamente con el sello de la Vía del Milisegundo.</p>
+        <button class="btn-accion" onclick="estamparPieza()">GENERAR ESTAMPA MILISEGUNDO HD</button>
     </div>
 
-    <canvas id="canvas-output" width="800" height="1050"></canvas>
+    <canvas id="canvas-output" width="800" height="600"></canvas>
 
     <script>
         let imagenSeleccionada = null;
 
-        function actualizarImagen(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = new Image();
-                    img.onload = function() {
-                        imagenSeleccionada = img;
-                        document.getElementById('prev-img-box').style.backgroundImage = `url(${e.target.result})`;
-                        document.getElementById('prev-img-box').innerText = '';
-                    };
-                    img.src = e.target.result;
-                }
-                reader.readAsDataURL(file);
+        function cargarImagen(event) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = () => { imagenSeleccionada = img; };
+                img.src = e.target.result;
             }
+            reader.readAsDataURL(event.target.files[0]);
         }
 
-        function actualizarTexto() {
-            document.getElementById('prev-id').innerHTML = `<strong>ID:</strong> ${document.getElementById('input-id').value}`;
-            document.getElementById('prev-geo').innerHTML = `<strong>GEO:</strong> ${document.getElementById('input-geo').value}`;
-            document.getElementById('prev-timeline').innerHTML = `<strong>LÍNEA DE TIEMPO:</strong> ${document.getElementById('input-timeline').value.substring(0, 45)}...`;
-            document.getElementById('prev-msg').innerHTML = `<strong>NOTA:</strong> ${document.getElementById('input-msg').value}`;
-        }
-
-        function descargarPiezaHD() {
+        function estamparPieza() {
             const canvas = document.getElementById('canvas-output');
             const ctx = canvas.getContext('2d');
+            const ahora = new Date();
+            const timestamp = ahora.toLocaleDateString() + ' ' + ahora.toLocaleTimeString() + ':' + ahora.getMilliseconds();
+            const idRobusto = "REF-" + ahora.getTime().toString().slice(-8) + "-BC-MILLI";
 
-            // Fondo pergamino de la pieza
-            ctx.fillStyle = '#f4ebd0';
-            ctx.fillRect(0, 0, 800, 1050);
+            // Fondo y dibujo base
+            ctx.fillStyle = '#000';
+            ctx.fillRect(0, 0, 800, 600);
+            if(imagenSeleccionada) ctx.drawImage(imagenSeleccionada, 0, 0, 800, 600);
 
-            // Marco exterior elegante
-            ctx.strokeStyle = '#5c3a21';
-            ctx.lineWidth = 8;
-            ctx.strokeRect(40, 40, 720, 970);
+            // Capa de Efecto Neón (Celeste Brillante)
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = "#00f2ff";
+            ctx.fillStyle = "#00f2ff";
 
-            // Encabezado del Álbum
-            ctx.fillStyle = '#2c1810';
-            ctx.font = 'bold 30px "Special Elite", monospace';
+            // Línea de Tiempo (Producto Estrella)
+            ctx.font = 'bold 40px "Orbitron", sans-serif';
             ctx.textAlign = 'center';
-            ctx.fillText("ÁLBUM INTERACTIVO BONUSCOM", 400, 105);
+            ctx.fillText("VÍA DEL MILISEGUNDO", 400, 80);
+            ctx.font = '24px "Share Tech Mono", monospace';
+            ctx.fillText(timestamp, 400, 120);
 
-            // Recuadro de la imagen estampada en HD
-            ctx.fillStyle = '#e3d2b0';
-            ctx.fillRect(100, 145, 600, 440);
-            ctx.lineWidth = 4;
-            ctx.strokeRect(100, 145, 600, 440);
-
-            if (imagenSeleccionada) {
-                ctx.drawImage(imagenSeleccionada, 100, 145, 600, 440);
-            } else {
-                ctx.fillStyle = '#5c3a21';
-                ctx.font = '20px "Courier Prime", monospace';
-                ctx.fillText('[ Imagen no cargada ]', 400, 375);
-            }
-
-            // Datos y Línea de Tiempo robusta
-            ctx.textAlign = 'left';
-            ctx.font = 'bold 20px "Courier Prime", monospace';
-            let startY = 630;
-
-            ctx.fillText("ID DE REGISTRO: " + document.getElementById('input-id').value, 100, startY);
-            ctx.fillText("LUGAR DE REFERENCIA: " + document.getElementById('input-geo').value, 100, startY + 40);
+            // ID Robusto (El respaldo que no se negocia)
+            ctx.font = '18px "Share Tech Mono", monospace';
+            ctx.shadowBlur = 0;
+            ctx.fillStyle = "#fff";
+            ctx.fillText("ID REGISTRO: " + idRobusto, 400, 560);
             
-            ctx.font = '18px "Courier Prime", monospace';
-            ctx.fillText("LÍNEA DE TIEMPO / HITOS:", 100, startY + 90);
-            ctx.font = 'italic 16px "Courier Prime", monospace';
-            
-            // Ajuste de texto multilínea para la línea de tiempo
-            const timelineText = document.getElementById('input-timeline').value;
-            ctx.fillText(timelineText, 100, startY + 120, 600);
+            ctx.strokeStyle = "#00f2ff";
+            ctx.strokeRect(20, 20, 760, 560);
 
-            ctx.font = 'bold 18px "Courier Prime", monospace';
-            ctx.fillText("ANOTACIÓN:", 100, startY + 180);
-            ctx.font = 'italic 18px "Courier Prime", monospace';
-            ctx.fillStyle = '#0f172a';
-            ctx.fillText(document.getElementById('input-msg').value, 100, startY + 210, 600);
-
-            // Pie de página institucional
-            ctx.fillStyle = '#5c3a21';
-            ctx.font = '16px "Special Elite", monospace';
-            ctx.textAlign = 'center';
-            ctx.fillText("© 2026 VentaniYA! Cinemascopado — Pieza de Colección Oficial", 400, 965);
-
-            // Disparar descarga en HD
-            const enlace = document.createElement('a');
-            enlace.download = 'pieza_album_bonuscom.png';
-            enlace.href = canvas.toDataURL('image/png');
-            enlace.click();
+            // Descarga
+            const link = document.createElement('a');
+            link.download = 'Estampa_Milisegundo.png';
+            link.href = canvas.toDataURL('image/png');
+            link.click();
         }
     </script>
 </body>
