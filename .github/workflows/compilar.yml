@@ -1,0 +1,23 @@
+name: Compilador de Paginas Bronceadas
+
+on:
+  push:
+    branches: [ main ]  # O la rama que uses por defecto (si es master, cambialo acá)
+
+jobs:
+  construir-hoja:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Copiar repositorio a la maquina virtual
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Instalar dependencias (Pillow)
+        run: pip install -r requirements.txt
+
+      - name: Ejecutar script generador
+        run: python script.py
